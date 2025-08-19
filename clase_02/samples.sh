@@ -1,0 +1,2 @@
+pstree -p $$
+ps -f
