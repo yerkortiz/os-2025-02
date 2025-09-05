@@ -7,7 +7,7 @@ int main() {
     if(pid == 0) {
         printf("child process pid %d ppid %d\n", getpid(), getppid());
     } else if(pid > 0) {
-        wait(&pid);
+        wait(NULL);
         printf("parent process pid %d ppid %d\n", getpid(), getppid());
     }
 }
