@@ -9,7 +9,7 @@ enum { THINKING, HUNGRY, EATING } state[NUM_PHILOSOPHERS];
 pthread_mutex_t mutex;
 pthread_cond_t condition[NUM_PHILOSOPHERS];
 
-void test(int id) {
+void try_to_eat(int id) {
     int left = (id + NUM_PHILOSOPHERS - 1) % NUM_PHILOSOPHERS;
     int right = (id + 1) % NUM_PHILOSOPHERS;
 
@@ -26,7 +26,7 @@ void pickup_forks(int id) {
     state[id] = HUNGRY;
     printf("Philosopher %d is HUNGRY.\n", id + 1);
 
-    test(id);
+    try_to_eat(id);
 
     while (state[id] != EATING) {
         pthread_cond_wait(&condition[id], &mutex);
@@ -44,8 +44,8 @@ void return_forks(int id) {
     state[id] = THINKING;
     printf("Philosopher %d is THINKING.\n", id + 1);
 
-    test(left);
-    test(right);
+    try_to_eat(left);
+    try_to_eat(right);
 
     pthread_mutex_unlock(&mutex);
 }
